@@ -2,12 +2,10 @@ import SwiftUI
 
 struct PlayerView: View {
     @Bindable var viewModel: PlayerViewModel
-    @Environment(\.dismiss) private var dismiss
     @State private var backgroundColor: Color = .black
     @State private var isDragging = false
     @State private var shuffleOn = false
     @State private var repeatOn = false
-    @GestureState private var dragOffset: CGFloat = 0
 
     var body: some View {
         ZStack {
@@ -27,27 +25,6 @@ struct PlayerView: View {
             }
             .padding(.horizontal, 20)
         }
-        .offset(y: max(0, dragOffset))
-        .gesture(
-            DragGesture(minimumDistance: 20, coordinateSpace: .local)
-                .updating($dragOffset) { value, state, _ in
-                    if value.translation.height > 0 {
-                        state = value.translation.height
-                    }
-                }
-                .onEnded { value in
-                    let velocity = value.predictedEndTranslation.height
-                    if velocity > 200 || dragOffset > 250 {
-                        withAnimation(.spring(response: 0.3)) {
-                            dismiss()
-                        }
-                    } else {
-                        withAnimation(.spring(response: 0.3)) {
-                            _ = dragOffset
-                        }
-                    }
-                }
-        )
         .task { await extractColor() }
     }
 

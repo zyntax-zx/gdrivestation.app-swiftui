@@ -19,6 +19,7 @@
 		A1000000000000000000000A /* TrackRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000A; };
 		A1000000000000000000000B /* MiniPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000B; };
 		A1000000000000000000000C /* ColorExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000C; };
+		A1000000000000000000000F /* PlayerOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000011; };
 		A1000000000000000000000D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000D; };
 		A1000000000000000000000E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000E; };
 /* End PBXBuildFile section */
@@ -39,6 +40,7 @@
 		A2000000000000000000000D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A2000000000000000000000E /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A2000000000000000000000F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A20000000000000000000011 /* PlayerOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerOverlay.swift; sourceTree = "<group>"; };
 		A20000000000000000000010 /* GDriveStation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GDriveStation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -119,6 +121,7 @@
 			children = (
 				A2000000000000000000000A /* TrackRow.swift */,
 				A2000000000000000000000B /* MiniPlayer.swift */,
+				A20000000000000000000011 /* PlayerOverlay.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				A1000000000000000000000A /* TrackRow.swift in Sources */,
 				A1000000000000000000000B /* MiniPlayer.swift in Sources */,
 				A1000000000000000000000C /* ColorExtractor.swift in Sources */,
+				A1000000000000000000000F /* PlayerOverlay.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

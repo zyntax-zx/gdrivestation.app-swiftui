@@ -32,11 +32,13 @@ struct ContentView: View {
                 }
             }
         }
-        .sheet(isPresented: $showPlayer) {
-            PlayerView(viewModel: viewModel)
-                .presentationDetents([.large])
-                .presentationDragIndicator(.hidden)
-                .presentationBackground(.ultraThinMaterial)
+        .overlay {
+            if showPlayer {
+                PlayerOverlay(isPresented: $showPlayer) {
+                    PlayerView(viewModel: viewModel)
+                }
+                .transition(.opacity)
+            }
         }
     }
 
