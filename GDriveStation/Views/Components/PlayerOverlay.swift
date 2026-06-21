@@ -81,13 +81,14 @@ struct PlayerOverlay<Content: View>: View {
     private var currentCornerRadius: CGFloat {
         guard screenHeight > 0 else { return 0 }
         let progress = min(dragOffset / screenHeight, 1.0)
-        return sqrt(progress) * maxCornerRadius
+        if progress < 0.005 { return 0 }
+        return min(30 + progress * 6, maxCornerRadius)
     }
 
     private var backgroundOpacity: Double {
-        guard screenHeight > 0 else { return 0.5 }
+        guard screenHeight > 0 else { return 1.0 }
         let progress = min(dragOffset / screenHeight, 1.0)
-        return Double(0.7 - progress * 0.4)
+        return Double(1.0 - progress * 0.4)
     }
 
     private var springAnimation: Animation {

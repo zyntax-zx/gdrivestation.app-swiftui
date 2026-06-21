@@ -51,7 +51,11 @@ struct PlayerView: View {
     // MARK: - Top Bar
 
     private var topBar: some View {
-        VStack(spacing: 0) {
+        let topInset = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .first?.windows.first?.safeAreaInsets.top ?? 59
+
+        return VStack(spacing: 0) {
             dragHandle
             HStack {
                 artistAvatar
@@ -62,6 +66,7 @@ struct PlayerView: View {
             .padding(.horizontal, 4)
             .padding(.bottom, 8)
         }
+        .padding(.top, topInset)
     }
 
     private var dragHandle: some View {
