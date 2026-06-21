@@ -95,7 +95,7 @@ final class PlayerService {
             NotificationCenter.default.removeObserver(didPlayToEndObserver)
         }
         didPlayToEndObserver = NotificationCenter.default.addObserver(
-            forName: NSNotification.Name.AVPlayerItemDidPlayToEndOfTime,
+            forName: AVPlayerItem.didPlayToEndTimeNotification,
             object: playerItem,
             queue: .main
         ) { [weak self] _ in
