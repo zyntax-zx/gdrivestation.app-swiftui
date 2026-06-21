@@ -22,6 +22,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: List schemes
+        working-directory: .
+        run: xcodebuild -project GDriveStation.xcodeproj -list
+
       - name: Build unsigned app
         working-directory: .
         run: |
@@ -35,7 +39,7 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGN_ENTITLEMENTS="" \
-            clean archive 2>&1 | tail -50
+            clean archive 2>&1 | tail -100
 
       - name: Verify .app
         working-directory: .
