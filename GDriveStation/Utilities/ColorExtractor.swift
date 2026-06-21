@@ -8,7 +8,7 @@ enum ColorExtractor {
                 guard let data = try? Data(contentsOf: imageURL),
                       let image = UIImage(data: data),
                       let cgImage = image.cgImage else {
-                    continuation.resume(returning: nil)
+                    continuation.resume(returning: nil as Color?)
                     return
                 }
 
@@ -21,7 +21,7 @@ enum ColorExtractor {
 
                 guard let outputImage = filter.outputImage,
                       let output = context.createCGImage(outputImage, from: outputImage.extent) else {
-                    continuation.resume(returning: nil)
+                    continuation.resume(returning: nil as Color?)
                     return
                 }
 
@@ -36,7 +36,7 @@ enum ColorExtractor {
                     alpha: 1.0
                 )
                 let swiftUIColor = Color(uiColor: uiColor)
-                continuation.resume(returning: swiftUIColor)
+                continuation.resume(returning: swiftUIColor as Color?)
             }
         }
     }
