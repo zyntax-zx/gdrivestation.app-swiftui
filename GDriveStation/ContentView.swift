@@ -32,8 +32,10 @@ struct ContentView: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $showPlayer) {
+        .sheet(isPresented: $showPlayer) {
             PlayerView(viewModel: viewModel)
+                .presentationDetents([.fraction(1.0)])
+                .presentationDragIndicator(.hidden)
         }
     }
 

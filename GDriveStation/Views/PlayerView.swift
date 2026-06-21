@@ -190,7 +190,8 @@ struct PlayerView: View {
                     .foregroundStyle(.white.opacity(0.7))
             }
         }
-        .padding(.top, 20)
+        .padding(.top, 24)
+        .padding(.bottom, 8)
     }
 
     // MARK: - Progress
@@ -243,6 +244,7 @@ struct PlayerView: View {
                     .monospacedDigit()
             }
         }
+        .padding(.top, 16)
     }
 
     // MARK: - Playback Controls
