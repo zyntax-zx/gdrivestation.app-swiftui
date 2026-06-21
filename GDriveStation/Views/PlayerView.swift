@@ -14,13 +14,22 @@ struct PlayerView: View {
 
             VStack(spacing: 0) {
                 topBar
-                Spacer()
+
+                Spacer(minLength: 8)
+
                 albumArt
-                Spacer()
+                    .frame(maxWidth: 340, maxHeight: 340)
+
+                Spacer(minLength: 12)
+
                 trackInfo
+
                 progressSection
-                Spacer()
+
+                Spacer(minLength: 12)
+
                 playbackControls
+
                 bottomBar
             }
             .padding(.horizontal, 20)
@@ -51,7 +60,7 @@ struct PlayerView: View {
                 airPlayButton
             }
             .padding(.horizontal, 4)
-            .padding(.bottom, 16)
+            .padding(.bottom, 8)
         }
     }
 
@@ -59,8 +68,8 @@ struct PlayerView: View {
         RoundedRectangle(cornerRadius: 2)
             .fill(.white.opacity(0.3))
             .frame(width: 40, height: 4)
-            .padding(.top, 12)
-            .padding(.bottom, 20)
+            .padding(.top, 8)
+            .padding(.bottom, 12)
     }
 
     private var artistAvatar: some View {
@@ -117,11 +126,9 @@ struct PlayerView: View {
                             .tint(.white)
                     }
                 }
-                .frame(maxWidth: .infinity)
                 .aspectRatio(1, contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
                 .shadow(color: .black.opacity(0.4), radius: 16, y: 8)
-                .padding(.horizontal, 8)
             } else {
                 albumFallback
             }
@@ -137,7 +144,6 @@ struct PlayerView: View {
         }
         .aspectRatio(1, contentMode: .fit)
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .padding(.horizontal, 8)
     }
 
     // MARK: - Track Info
@@ -145,13 +151,11 @@ struct PlayerView: View {
     private var trackInfo: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 4) {
-                HStack(spacing: 6) {
-                    Text(viewModel.player.currentTrack?.title ?? "Not Playing")
-                        .font(.title3)
-                        .fontWeight(.bold)
-                        .foregroundStyle(.white)
-                        .lineLimit(1)
-                }
+                Text(viewModel.player.currentTrack?.title ?? "Not Playing")
+                    .font(.title3)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.white)
+                    .lineLimit(1)
 
                 Text(viewModel.player.currentTrack?.artist ?? "")
                     .font(.subheadline)
@@ -167,8 +171,8 @@ struct PlayerView: View {
                     .foregroundStyle(.white.opacity(0.7))
             }
         }
-        .padding(.top, 24)
-        .padding(.bottom, 8)
+        .padding(.top, 12)
+        .padding(.bottom, 4)
     }
 
     // MARK: - Progress
@@ -221,7 +225,7 @@ struct PlayerView: View {
                     .monospacedDigit()
             }
         }
-        .padding(.top, 16)
+        .padding(.top, 8)
     }
 
     // MARK: - Playback Controls
@@ -311,7 +315,7 @@ struct PlayerView: View {
                 }
             }
         }
-        .padding(.vertical, 16)
+        .padding(.top, 8)
         .padding(.bottom, 8)
     }
 

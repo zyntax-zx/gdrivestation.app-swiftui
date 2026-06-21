@@ -8,14 +8,13 @@ struct PlayerOverlay<Content: View>: View {
     @State private var lastOffset: CGFloat = 0
     @State private var screenHeight: CGFloat = 0
 
-    private let maxCornerRadius: CGFloat = 20
+    private let maxCornerRadius: CGFloat = 36
 
     var body: some View {
         GeometryReader { geo in
-            let maxDrag = screenHeight - 0
+            let maxDrag = screenHeight
 
             ZStack(alignment: .bottom) {
-                // Dimmed background (visible when dragging)
                 Color.black.opacity(backgroundOpacity)
                     .ignoresSafeArea()
                     .onTapGesture {
@@ -24,8 +23,7 @@ struct PlayerOverlay<Content: View>: View {
                         }
                     }
 
-                // Player card
-                VStack(spacing: 0) {
+                Group {
                     content()
                 }
                 .frame(width: geo.size.width, height: screenHeight)
@@ -83,13 +81,13 @@ struct PlayerOverlay<Content: View>: View {
     private var currentCornerRadius: CGFloat {
         guard screenHeight > 0 else { return 0 }
         let progress = min(dragOffset / screenHeight, 1.0)
-        return progress * maxCornerRadius
+        return sqrt(progress) * maxCornerRadius
     }
 
     private var backgroundOpacity: Double {
         guard screenHeight > 0 else { return 0.5 }
         let progress = min(dragOffset / screenHeight, 1.0)
-        return Double(1.0 - progress * 0.5)
+        return Double(0.7 - progress * 0.4)
     }
 
     private var springAnimation: Animation {
