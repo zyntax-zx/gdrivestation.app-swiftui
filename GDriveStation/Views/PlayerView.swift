@@ -54,8 +54,12 @@ struct PlayerView: View {
     // MARK: - Background
 
     private var background: some View {
-        backgroundColor
-            .animation(.easeInOut(duration: 0.5), value: backgroundColor)
+        LinearGradient(
+            colors: [backgroundColor, backgroundColor.opacity(0.6), .black],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+        .animation(.easeInOut(duration: 0.5), value: backgroundColor)
     }
 
     // MARK: - Top Bar
