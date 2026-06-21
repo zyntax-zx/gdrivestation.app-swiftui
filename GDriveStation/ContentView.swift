@@ -34,8 +34,9 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showPlayer) {
             PlayerView(viewModel: viewModel)
-                .presentationDetents([.fraction(1.0)])
+                .presentationDetents([.large])
                 .presentationDragIndicator(.hidden)
+                .presentationBackground(.ultraThinMaterial)
         }
     }
 
