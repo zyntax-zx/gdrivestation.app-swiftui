@@ -26,18 +26,31 @@ enum ColorExtractor {
                     return
                 }
 
-                let uiColor = UIColor(cgImage: output)
-                var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
-                uiColor.getRed(&r, green: &g, blue: &b, alpha: &a)
+                var pixel = [UInt8](repeating: 0, count: 4)
+                let colorSpace = CGColorSpaceCreateDeviceRGB()
+                guard let bitmapContext = CGContext(data: &pixel,
+                                                    width: 1,
+                                                    height: 1,
+                                                    bitsPerComponent: 8,
+                                                    bytesPerRow: 4,
+                                                    space: colorSpace,
+                                                    bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+                else {
+                    continuation.resume(returning: nil)
+                    return
+                }
 
-                let adjusted = UIColor(
-                    red: min(r + 0.1, 1.0),
-                    green: min(g + 0.1, 1.0),
-                    blue: min(b + 0.1, 1.0),
-                    alpha: 1.0
-                )
+                bitmapContext.draw(output, in: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-                let swiftUIColor = Color(uiColor: adjusted)
+                let r = CGFloat(pixel[0]) / 255.0
+                let g = CGFloat(pixel[1]) / 255.0
+                let b = CGFloat(pixel[2]) / 255.0
+                let a = CGFloat(pixel[3]) / 255.0
+
+                let swiftUIColor = Color(red: min(r + 0.1, 1.0),
+                                         green: min(g + 0.1, 1.0),
+                                         blue: min(b + 0.1, 1.0),
+                                         opacity: Double(a))
                 continuation.resume(returning: swiftUIColor)
             }
         }
