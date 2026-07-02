@@ -2,7 +2,7 @@ import Foundation
 
 final class APIService {
     static let shared = APIService()
-    private let baseURL = "https://music-server-gdrive.sakvragi.workers.dev"
+    private let baseURL = "https://music-proxyserver-gdrive.sakvragi.workers.dev"
 
     private init() {}
 
