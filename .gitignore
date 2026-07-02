@@ -34,3 +34,5 @@ Carthage/Build/
 .DS_Store
 *.swp
 *~
+
+*.test
