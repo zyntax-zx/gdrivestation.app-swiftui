@@ -36,3 +36,12 @@ Carthage/Build/
 *~
 
 *.test
+
+# Signing & Certificates
+*.mobileprovision
+*.p12
+*.cer
+*.pem
+
+# Environment
+.env*

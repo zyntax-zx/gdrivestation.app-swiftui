@@ -2,7 +2,9 @@ import Foundation
 
 final class APIService {
     static let shared = APIService()
-    private let baseURL = "https://music-proxyserver-gdrive.sakvragi.workers.dev"
+    static let baseURL: String = {
+        Bundle.main.infoDictionary?["BackendURL"] as? String ?? "https://music-proxyserver-gdrive.sakvragi.workers.dev"
+    }()
 
     private init() {}
 

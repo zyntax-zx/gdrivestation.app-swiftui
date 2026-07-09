@@ -59,5 +59,7 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Dark</string>
+	<key>BackendURL</key>
+	<string>https://music-proxyserver-gdrive.sakvragi.workers.dev</string>
 </dict>
 </plist>

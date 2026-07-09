@@ -19,7 +19,7 @@ struct Track: Codable, Identifiable, Hashable {
     let dominantColors: [String]
 
     var streamURL: URL {
-        URL(string: "https://music-server-gdrive.sakvragi.workers.dev/api/stream/\(id)")!
+        URL(string: "\(APIService.baseURL)/api/stream/\(id)")!
     }
 
     var coverImageURL: URL? {
