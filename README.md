@@ -1,4 +1,4 @@
-# GDriveStation (iOS)
+# GDriveStation Alpha (iOS)
 
 Reproductor musical personal inspirado en Tidal para iOS. Almacena y reproduce música desde Google Drive usando un backend en Cloudflare Workers.
 
