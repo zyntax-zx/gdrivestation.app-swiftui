@@ -37,58 +37,30 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGN_ENTITLEMENTS="" \
-            clean archive 2>&1 | tail -100
+            clean archive
 
-      - name: Debug archive contents
+      - name: Find and create IPA
         run: |
-          echo "=== Archive structure ==="
-          find build/GDriveStation.xcarchive -maxdepth 4 -type d || echo "Archive not found"
+          echo "=== Archive contents ==="
+          find build/GDriveStation.xcarchive -name "*.app" -type d
           echo ""
-          echo "=== Looking for .app ==="
-          find build/GDriveStation.xcarchive -name "*.app" -type d || echo "No .app found"
 
-      - name: Export IPA
-        run: |
-          cat > ExportOptions.plist << 'EOF'
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-            <key>method</key>
-            <string>ad-hoc</string>
-            <key>stripSwiftSymbols</key>
-            <false/>
-            <key>compileBitcode</key>
-            <false/>
-          </dict>
-          </plist>
-          EOF
+          APP_PATH=$(find build/GDriveStation.xcarchive -name "*.app" -type d | head -1)
 
-          xcodebuild \
-            -exportArchive \
-            -archivePath "$PWD/build/GDriveStation.xcarchive" \
-            -exportOptionsPlist ExportOptions.plist \
-            -exportPath "$PWD/build/export" 2>&1 | tail -50
-
-          echo ""
-          echo "=== Exported files ==="
-          find build/export -type f || echo "No files exported"
-
-      - name: Create IPA
-        run: |
-          APP_PATH=$(find build/export -name "*.app" -type d | head -1)
           if [ -z "$APP_PATH" ]; then
-            echo "ERROR: No .app found in export directory"
+            echo "ERROR: No .app found in archive"
+            echo "=== Full archive tree ==="
+            find build/GDriveStation.xcarchive -maxdepth 5
             exit 1
           fi
-          echo "Found app: $APP_PATH"
 
+          echo "Found: $APP_PATH"
           mkdir -p Payload
           cp -r "$APP_PATH" Payload/
           zip -r GDriveStation-unsigned.ipa Payload
-          rm -rf Payload ExportOptions.plist
+          rm -rf Payload
           echo ""
-          echo "IPA size:"
+          echo "IPA created:"
           ls -lh GDriveStation-unsigned.ipa
 
       - name: Upload IPA artifact
