@@ -43,18 +43,23 @@ struct LibraryView: View {
         Button(action: { viewModel.playAll() }) {
             HStack {
                 Image(systemName: "play.fill")
-                    .font(.caption)
+                    .font(DesignTokens.Typography.tertiaryFont)
                 Text("Play All")
-                    .font(.subheadline)
+                    .font(DesignTokens.Typography.secondaryFont)
                     .fontWeight(.semibold)
             }
-            .foregroundStyle(.white)
+            .foregroundStyle(.white.opacity(DesignTokens.Opacity.primary))
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 12)
-            .background(Color.white.opacity(0.1))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .padding(.vertical, DesignTokens.Spacing.md)
+            .background(Color.white.opacity(DesignTokens.Opacity.ghost))
+            .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.container))
         }
         .listRowBackground(Color.clear)
-        .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+        .listRowInsets(EdgeInsets(
+            top: DesignTokens.Spacing.sm,
+            leading: DesignTokens.Spacing.lg,
+            bottom: DesignTokens.Spacing.sm,
+            trailing: DesignTokens.Spacing.lg
+        ))
     }
 }

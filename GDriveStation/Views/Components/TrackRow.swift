@@ -5,14 +5,14 @@ struct TrackRow: View {
     let isPlaying: Bool
 
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: DesignTokens.Spacing.md) {
             albumArt
             trackInfo
             Spacer()
             duration
         }
-        .padding(.vertical, 4)
-        .background(isPlaying ? Color.white.opacity(0.05) : Color.clear)
+        .padding(.vertical, DesignTokens.Spacing.xs)
+        .background(isPlaying ? Color.white.opacity(DesignTokens.Opacity.subtle) : Color.clear)
         .contentShape(Rectangle())
     }
 
@@ -33,7 +33,7 @@ struct TrackRow: View {
                     }
                 }
                 .frame(width: 48, height: 48)
-                .clipShape(RoundedRectangle(cornerRadius: 6))
+                .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.artwork))
             } else {
                 fallbackArt
             }
@@ -42,34 +42,34 @@ struct TrackRow: View {
 
     private var fallbackArt: some View {
         ZStack {
-            Color.white.opacity(0.1)
+            Color.white.opacity(DesignTokens.Opacity.ghost)
             Text(track.title.prefix(1).uppercased())
                 .font(.headline)
                 .foregroundStyle(.white)
         }
         .frame(width: 48, height: 48)
-        .clipShape(RoundedRectangle(cornerRadius: 6))
+        .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.artwork))
     }
 
     private var trackInfo: some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: DesignTokens.Spacing.xs) {
             Text(track.title)
-                .font(.subheadline)
-                .fontWeight(isPlaying ? .semibold : .regular)
-                .foregroundStyle(isPlaying ? .white : .white.opacity(0.9))
+                .font(DesignTokens.Typography.titleFont)
+                .fontWeight(isPlaying ? .semibold : DesignTokens.Typography.titleWeight)
+                .foregroundStyle(isPlaying ? .white.opacity(DesignTokens.Opacity.primary) : .white.opacity(DesignTokens.Opacity.secondary))
                 .lineLimit(1)
 
             Text(track.artist)
-                .font(.caption)
-                .foregroundStyle(.white.opacity(0.5))
+                .font(DesignTokens.Typography.secondaryFont)
+                .foregroundStyle(.white.opacity(DesignTokens.Opacity.secondary))
                 .lineLimit(1)
         }
     }
 
     private var duration: some View {
         Text(track.durationFormatted)
-            .font(.caption)
-            .foregroundStyle(.white.opacity(0.4))
+            .font(DesignTokens.Typography.tertiaryFont)
+            .foregroundStyle(.white.opacity(DesignTokens.Opacity.tertiary))
             .monospacedDigit()
     }
 }

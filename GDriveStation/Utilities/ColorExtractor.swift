@@ -47,10 +47,21 @@ enum ColorExtractor {
                 let b = CGFloat(pixel[2]) / 255.0
                 let a = CGFloat(pixel[3]) / 255.0
 
-                let swiftUIColor = Color(red: min(r + 0.1, 1.0),
-                                         green: min(g + 0.1, 1.0),
-                                         blue: min(b + 0.1, 1.0),
-                                         opacity: Double(a))
+                // Boost saturation to avoid washed-out grays from areaAverage
+                var hue: CGFloat = 0
+                var sat: CGFloat = 0
+                var bri: CGFloat = 0
+                let uiColor = UIColor(red: r, green: g, blue: b, alpha: a)
+                uiColor.getHue(&hue, saturation: &sat, brightness: &bri, alpha: nil)
+
+                sat = min(sat * 1.3 + 0.15, 1.0)
+                bri = max(min(bri, 0.85), 0.35)
+
+                let vividColor = UIColor(hue: hue, saturation: sat, brightness: bri, alpha: a)
+                var finalR: CGFloat = 0, finalG: CGFloat = 0, finalB: CGFloat = 0, finalA: CGFloat = 0
+                vividColor.getRed(&finalR, green: &finalG, blue: &finalB, alpha: &finalA)
+
+                let swiftUIColor = Color(red: finalR, green: finalG, blue: finalB, opacity: Double(finalA))
                 continuation.resume(returning: swiftUIColor)
             }
         }

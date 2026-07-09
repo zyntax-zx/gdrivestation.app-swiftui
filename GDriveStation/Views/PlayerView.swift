@@ -12,40 +12,40 @@ struct PlayerView: View {
             background
                 .ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                topBar
+        VStack(spacing: 0) {
+            topBar
 
-                Spacer(minLength: 8)
+            Spacer(minLength: DesignTokens.Spacing.sm)
 
-                albumArt
-                    .frame(maxWidth: 340, maxHeight: 340)
+            albumArt
+                .frame(maxWidth: DesignTokens.Layout.albumArtMaxSize, maxHeight: DesignTokens.Layout.albumArtMaxSize)
 
-                Spacer(minLength: 12)
+            Spacer(minLength: DesignTokens.Spacing.lg)
 
-                trackInfo
+            trackInfo
 
-                progressSection
+            progressSection
 
-                Spacer(minLength: 12)
+            Spacer(minLength: DesignTokens.Spacing.lg)
 
-                playbackControls
+            playbackControls
 
-                bottomBar
-            }
-            .padding(.horizontal, 20)
+            bottomBar
         }
+        .padding(.horizontal, DesignTokens.Spacing.xl)
+    }
         .task { await extractColor() }
     }
 
     // MARK: - Background
 
     private var background: some View {
-        LinearGradient(
-            colors: [backgroundColor, backgroundColor.opacity(0.6), .black],
-            startPoint: .top,
-            endPoint: .bottom
-        )
-        .animation(.easeInOut(duration: 0.5), value: backgroundColor)
+            LinearGradient(
+                colors: [backgroundColor, backgroundColor.opacity(DesignTokens.Opacity.tertiary), .black],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .animation(DesignTokens.Animation.colorTransition, value: backgroundColor)
     }
 
     // MARK: - Top Bar
@@ -71,18 +71,18 @@ struct PlayerView: View {
 
     private var dragHandle: some View {
         RoundedRectangle(cornerRadius: 2)
-            .fill(.white.opacity(0.3))
+            .fill(.white.opacity(DesignTokens.Opacity.tertiary))
             .frame(width: 40, height: 4)
-            .padding(.top, 8)
-            .padding(.bottom, 12)
+            .padding(.top, DesignTokens.Spacing.sm)
+            .padding(.bottom, DesignTokens.Spacing.lg)
     }
 
     private var artistAvatar: some View {
         ZStack {
-            Color.white.opacity(0.15)
+            Color.white.opacity(DesignTokens.Opacity.ghost)
             Image(systemName: "person.fill")
                 .font(.system(size: 14))
-                .foregroundStyle(.white.opacity(0.5))
+                .foregroundStyle(.white.opacity(DesignTokens.Opacity.secondary))
         }
         .frame(width: 36, height: 36)
         .clipShape(Circle())
@@ -91,12 +91,12 @@ struct PlayerView: View {
     private var lyricsButton: some View {
         Button(action: {}) {
             Text("Lyrics")
-                .font(.subheadline)
+                .font(DesignTokens.Typography.secondaryFont)
                 .fontWeight(.medium)
-                .foregroundStyle(.white)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .background(.white.opacity(0.15))
+                .foregroundStyle(.white.opacity(DesignTokens.Opacity.primary))
+                .padding(.horizontal, DesignTokens.Spacing.lg)
+                .padding(.vertical, DesignTokens.Spacing.sm)
+                .background(.white.opacity(DesignTokens.Opacity.ghost))
                 .clipShape(Capsule())
         }
     }
@@ -105,9 +105,9 @@ struct PlayerView: View {
         Button(action: {}) {
             Image(systemName: "airplayaudio")
                 .font(.body)
-                .foregroundStyle(.white)
+                .foregroundStyle(.white.opacity(DesignTokens.Opacity.primary))
                 .frame(width: 36, height: 36)
-                .background(.white.opacity(0.15))
+                .background(.white.opacity(DesignTokens.Opacity.ghost))
                 .clipShape(Circle())
         }
     }
@@ -132,8 +132,12 @@ struct PlayerView: View {
                     }
                 }
                 .aspectRatio(1, contentMode: .fit)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                .shadow(color: .black.opacity(0.4), radius: 16, y: 8)
+                .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.artwork))
+                .shadow(
+                    color: DesignTokens.Shadow.md.color,
+                    radius: DesignTokens.Shadow.md.radius,
+                    y: DesignTokens.Shadow.md.y
+                )
             } else {
                 albumFallback
             }
@@ -142,29 +146,29 @@ struct PlayerView: View {
 
     private var albumFallback: some View {
         ZStack {
-            Color.white.opacity(0.1)
+            Color.white.opacity(DesignTokens.Opacity.ghost)
             Image(systemName: "music.note")
-                .font(.system(size: 60))
-                .foregroundStyle(.white.opacity(0.3))
+                .font(.system(size: DesignTokens.Layout.albumArtFallbackIcon))
+                .foregroundStyle(.white.opacity(DesignTokens.Opacity.tertiary))
         }
         .aspectRatio(1, contentMode: .fit)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: DesignTokens.Radius.artwork))
     }
 
     // MARK: - Track Info
 
     private var trackInfo: some View {
         HStack(alignment: .top) {
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: DesignTokens.Spacing.xs) {
                 Text(viewModel.player.currentTrack?.title ?? "Not Playing")
-                    .font(.title3)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.white)
+                    .font(DesignTokens.Typography.titleFont)
+                    .fontWeight(DesignTokens.Typography.titleWeight)
+                    .foregroundStyle(.white.opacity(DesignTokens.Opacity.primary))
                     .lineLimit(1)
 
                 Text(viewModel.player.currentTrack?.artist ?? "")
-                    .font(.subheadline)
-                    .foregroundStyle(.white.opacity(0.6))
+                    .font(DesignTokens.Typography.secondaryFont)
+                    .foregroundStyle(.white.opacity(DesignTokens.Opacity.secondary))
                     .lineLimit(1)
             }
 
@@ -172,37 +176,37 @@ struct PlayerView: View {
 
             Button(action: {}) {
                 Image(systemName: "plus")
-                    .font(.title3)
-                    .foregroundStyle(.white.opacity(0.7))
+                    .font(.title2)
+                    .foregroundStyle(.white.opacity(DesignTokens.Opacity.secondary))
             }
         }
-        .padding(.top, 12)
-        .padding(.bottom, 4)
+        .padding(.top, DesignTokens.Spacing.lg)
+        .padding(.bottom, DesignTokens.Spacing.sm)
     }
 
     // MARK: - Progress
 
     private var progressSection: some View {
-        VStack(spacing: 6) {
+        VStack(spacing: DesignTokens.Spacing.sm) {
             GeometryReader { geometry in
                 let width = geometry.size.width
                 let progress = viewModel.player.progress
 
                 ZStack(alignment: .leading) {
                     Capsule()
-                        .fill(.white.opacity(0.25))
-                        .frame(height: 3)
+                        .fill(.white.opacity(DesignTokens.Opacity.tertiary))
+                        .frame(height: DesignTokens.Layout.progressBarHeight)
 
                     Capsule()
-                        .fill(.white)
-                        .frame(width: width * progress, height: 3)
+                        .fill(.white.opacity(DesignTokens.Opacity.primary))
+                        .frame(width: width * progress, height: DesignTokens.Layout.progressBarHeight)
 
                     Circle()
-                        .fill(.white)
-                        .frame(width: 10, height: 10)
-                        .offset(x: width * progress - 5)
+                        .fill(.white.opacity(DesignTokens.Opacity.primary))
+                        .frame(width: DesignTokens.Layout.progressThumbSize, height: DesignTokens.Layout.progressThumbSize)
+                        .offset(x: width * progress - DesignTokens.Layout.progressThumbSize / 2)
                 }
-                .frame(height: 10)
+                .frame(height: DesignTokens.Layout.progressThumbSize)
                 .contentShape(Rectangle())
                 .gesture(
                     DragGesture(minimumDistance: 0)
@@ -216,21 +220,21 @@ struct PlayerView: View {
                         }
                 )
             }
-            .frame(height: 10)
+            .frame(height: DesignTokens.Layout.progressThumbSize)
 
             HStack {
                 Text(formatTime(viewModel.player.currentTime))
-                    .font(.caption2)
-                    .foregroundStyle(.white.opacity(0.5))
+                    .font(DesignTokens.Typography.timeFont)
+                    .foregroundStyle(.white.opacity(DesignTokens.Opacity.secondary))
                     .monospacedDigit()
                 Spacer()
                 Text("-\(formatTime(viewModel.player.duration - viewModel.player.currentTime))")
-                    .font(.caption2)
-                    .foregroundStyle(.white.opacity(0.5))
+                    .font(DesignTokens.Typography.timeFont)
+                    .foregroundStyle(.white.opacity(DesignTokens.Opacity.secondary))
                     .monospacedDigit()
             }
         }
-        .padding(.top, 8)
+        .padding(.top, DesignTokens.Spacing.sm)
     }
 
     // MARK: - Playback Controls
@@ -240,7 +244,7 @@ struct PlayerView: View {
             Button(action: { shuffleOn.toggle() }) {
                 Image(systemName: "shuffle")
                     .font(.body)
-                    .foregroundStyle(shuffleOn ? .white : .white.opacity(0.4))
+                    .foregroundStyle(shuffleOn ? .white.opacity(DesignTokens.Opacity.primary) : .white.opacity(DesignTokens.Opacity.tertiary))
             }
             .frame(width: 50)
 
@@ -249,7 +253,7 @@ struct PlayerView: View {
             Button(action: { viewModel.player.skipToPrevious() }) {
                 Image(systemName: "backward.fill")
                     .font(.title2)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(.white.opacity(DesignTokens.Opacity.primary))
             }
             .frame(width: 50)
 
@@ -257,8 +261,8 @@ struct PlayerView: View {
 
             Button(action: { viewModel.player.togglePlayback() }) {
                 Image(systemName: viewModel.player.isPlaying ? "pause.fill" : "play.fill")
-                    .font(.system(size: 52))
-                    .foregroundStyle(.white)
+                    .font(.system(size: DesignTokens.Layout.playButtonSize))
+                    .foregroundStyle(.white.opacity(DesignTokens.Opacity.primary))
             }
             .frame(width: 70)
 
@@ -267,7 +271,7 @@ struct PlayerView: View {
             Button(action: { viewModel.player.skipToNext() }) {
                 Image(systemName: "forward.fill")
                     .font(.title2)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(.white.opacity(DesignTokens.Opacity.primary))
             }
             .frame(width: 50)
 
@@ -276,11 +280,11 @@ struct PlayerView: View {
             Button(action: { repeatOn.toggle() }) {
                 Image(systemName: "repeat")
                     .font(.body)
-                    .foregroundStyle(repeatOn ? .white : .white.opacity(0.4))
+                    .foregroundStyle(repeatOn ? .white.opacity(DesignTokens.Opacity.primary) : .white.opacity(DesignTokens.Opacity.tertiary))
             }
             .frame(width: 50)
         }
-        .padding(.horizontal, 8)
+        .padding(.horizontal, DesignTokens.Spacing.sm)
     }
 
     // MARK: - Bottom Bar
@@ -288,18 +292,18 @@ struct PlayerView: View {
     private var bottomBar: some View {
         HStack {
             Button(action: {}) {
-                HStack(spacing: 8) {
+                HStack(spacing: DesignTokens.Spacing.sm) {
                     Image(systemName: "line.3.horizontal")
                         .font(.subheadline)
-                        .foregroundStyle(.white.opacity(0.7))
+                        .foregroundStyle(.white.opacity(DesignTokens.Opacity.secondary))
                     VStack(alignment: .leading, spacing: 1) {
                         Text("Playing from")
-                            .font(.caption2)
-                            .foregroundStyle(.white.opacity(0.5))
+                            .font(DesignTokens.Typography.tertiaryFont)
+                            .foregroundStyle(.white.opacity(DesignTokens.Opacity.secondary))
                         Text(viewModel.player.currentTrack?.album ?? "Library")
-                            .font(.caption)
+                            .font(DesignTokens.Typography.tertiaryFont)
                             .fontWeight(.medium)
-                            .foregroundStyle(.white)
+                            .foregroundStyle(.white.opacity(DesignTokens.Opacity.primary))
                             .lineLimit(1)
                     }
                 }
@@ -307,21 +311,21 @@ struct PlayerView: View {
 
             Spacer()
 
-            HStack(spacing: 16) {
+            HStack(spacing: DesignTokens.Spacing.lg) {
                 Button(action: {}) {
                     Image(systemName: "square.and.arrow.up")
                         .font(.body)
-                        .foregroundStyle(.white.opacity(0.7))
+                        .foregroundStyle(.white.opacity(DesignTokens.Opacity.secondary))
                 }
                 Button(action: {}) {
                     Image(systemName: "ellipsis")
                         .font(.body)
-                        .foregroundStyle(.white.opacity(0.7))
+                        .foregroundStyle(.white.opacity(DesignTokens.Opacity.secondary))
                 }
             }
         }
-        .padding(.top, 8)
-        .padding(.bottom, 8)
+        .padding(.top, DesignTokens.Spacing.lg)
+        .padding(.bottom, DesignTokens.Spacing.lg)
     }
 
     // MARK: - Helpers

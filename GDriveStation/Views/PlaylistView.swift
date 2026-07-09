@@ -40,18 +40,23 @@ struct PlaylistView: View {
     }
 
     private func headerSection(_ playlist: Playlist) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
             if !playlist.description.isEmpty {
                 Text(playlist.description)
-                    .font(.subheadline)
-                    .foregroundStyle(.white.opacity(0.6))
+                    .font(DesignTokens.Typography.secondaryFont)
+                    .foregroundStyle(.white.opacity(DesignTokens.Opacity.secondary))
             }
             Text("\(playlist.tracks.count) tracks")
-                .font(.caption)
-                .foregroundStyle(.white.opacity(0.4))
+                .font(DesignTokens.Typography.tertiaryFont)
+                .foregroundStyle(.white.opacity(DesignTokens.Opacity.tertiary))
         }
-        .padding(.vertical, 8)
+        .padding(.vertical, DesignTokens.Spacing.sm)
         .listRowBackground(Color.clear)
-        .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+        .listRowInsets(EdgeInsets(
+            top: 0,
+            leading: DesignTokens.Spacing.lg,
+            bottom: 0,
+            trailing: DesignTokens.Spacing.lg
+        ))
     }
 }
