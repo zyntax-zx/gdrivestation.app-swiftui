@@ -23,11 +23,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: List schemes
-        working-directory: .
         run: xcodebuild -project GDriveStation.xcodeproj -list
 
-      - name: Build unsigned app
-        working-directory: .
+      - name: Archive
         run: |
           xcodebuild \
             -project GDriveStation.xcodeproj \
@@ -41,26 +39,55 @@ jobs:
             CODE_SIGN_ENTITLEMENTS="" \
             clean archive 2>&1 | tail -100
 
-      - name: Verify .app
-        working-directory: .
+      - name: Debug archive contents
         run: |
-          APP_PATH="build/GDriveStation.xcarchive/Products/Applications/GDriveStation.app"
-          echo "Contents of .app:"
-          ls -la "$APP_PATH/" || echo "APP NOT FOUND"
+          echo "=== Archive structure ==="
+          find build/GDriveStation.xcarchive -maxdepth 4 -type d || echo "Archive not found"
           echo ""
-          echo "Binary size:"
-          ls -lh "$APP_PATH/GDriveStation" 2>/dev/null || echo "BINARY NOT FOUND"
-          echo ""
-          echo "Info.plist:"
-          plutil -p "$APP_PATH/Info.plist" 2>/dev/null || echo "Info.plist NOT FOUND"
+          echo "=== Looking for .app ==="
+          find build/GDriveStation.xcarchive -name "*.app" -type d || echo "No .app found"
 
-      - name: Create unsigned IPA
-        working-directory: .
+      - name: Export IPA
         run: |
+          cat > ExportOptions.plist << 'EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>ad-hoc</string>
+            <key>stripSwiftSymbols</key>
+            <false/>
+            <key>compileBitcode</key>
+            <false/>
+          </dict>
+          </plist>
+          EOF
+
+          xcodebuild \
+            -exportArchive \
+            -archivePath "$PWD/build/GDriveStation.xcarchive" \
+            -exportOptionsPlist ExportOptions.plist \
+            -exportPath "$PWD/build/export" 2>&1 | tail -50
+
+          echo ""
+          echo "=== Exported files ==="
+          find build/export -type f || echo "No files exported"
+
+      - name: Create IPA
+        run: |
+          APP_PATH=$(find build/export -name "*.app" -type d | head -1)
+          if [ -z "$APP_PATH" ]; then
+            echo "ERROR: No .app found in export directory"
+            exit 1
+          fi
+          echo "Found app: $APP_PATH"
+
           mkdir -p Payload
-          cp -r build/GDriveStation.xcarchive/Products/Applications/GDriveStation.app Payload/
+          cp -r "$APP_PATH" Payload/
           zip -r GDriveStation-unsigned.ipa Payload
-          rm -rf Payload
+          rm -rf Payload ExportOptions.plist
+          echo ""
           echo "IPA size:"
           ls -lh GDriveStation-unsigned.ipa
 
