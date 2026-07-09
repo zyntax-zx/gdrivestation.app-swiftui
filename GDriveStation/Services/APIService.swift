@@ -25,7 +25,7 @@ final class APIService {
     }
 
     private func fetch<T: Decodable>(path: String) async throws -> T {
-        guard let url = URL(string: baseURL + path) else {
+        guard let url = URL(string: Self.baseURL + path) else {
             throw APIError.invalidURL
         }
 
