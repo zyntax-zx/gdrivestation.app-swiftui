@@ -19,6 +19,7 @@
 		A1000000000000000000000A /* TrackRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000A; };
 		A1000000000000000000000B /* MiniPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000B; };
 		A1000000000000000000000C /* ColorExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000C; };
+		A10000000000000000000010 /* DesignTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000012; };
 		A1000000000000000000000F /* PlayerOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000011; };
 		A1000000000000000000000D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000D; };
 		A1000000000000000000000E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000E; };
@@ -37,6 +38,7 @@
 		A2000000000000000000000A /* TrackRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackRow.swift; sourceTree = "<group>"; };
 		A2000000000000000000000B /* MiniPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayer.swift; sourceTree = "<group>"; };
 		A2000000000000000000000C /* ColorExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtractor.swift; sourceTree = "<group>"; };
+		A20000000000000000000012 /* DesignTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTokens.swift; sourceTree = "<group>"; };
 		A2000000000000000000000D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A2000000000000000000000E /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A2000000000000000000000F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				A2000000000000000000000C /* ColorExtractor.swift */,
+				A20000000000000000000012 /* DesignTokens.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 				A1000000000000000000000A /* TrackRow.swift in Sources */,
 				A1000000000000000000000B /* MiniPlayer.swift in Sources */,
 				A1000000000000000000000C /* ColorExtractor.swift in Sources */,
+				A10000000000000000000010 /* DesignTokens.swift in Sources */,
 				A1000000000000000000000F /* PlayerOverlay.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
